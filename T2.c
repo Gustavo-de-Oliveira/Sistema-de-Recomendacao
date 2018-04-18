@@ -11,6 +11,7 @@ int main(int argc, char const *argv[]){
 
 	int tabela[n][it];
 	float similaridade[n][n];
+	float medias[n];
   
 	for (int i = 0; i < n; ++i){
 		for (int j = 0; j < it; ++j){
@@ -23,20 +24,27 @@ int main(int argc, char const *argv[]){
 	//inicio do bloco para calculo das similaridades
 	int nominadorsimilaridade;
 	float raiz1, raiz2;
-	
-	nominadorsimilaridade = 0; raiz1 = 0; raiz2 = 0;	
+	float media;
+	int indice;
+
+	nominadorsimilaridade = 0; raiz1 = 0; raiz2 = 0; media = 0; indice = 0;
 	for (int i = 0; i < n; i = ++i){
 		for (int j = 0; j < n; ++j){
 			for (int k = 0; k < it; ++k){
 				nominadorsimilaridade += tabela[i][k] * tabela[j][k];
 				raiz1 += pow(tabela[i][k], 2);
 				raiz2 += pow(tabela[j][k], 2);
+				media += tabela[i][k];
+				if (tabela[i][k] != 0){
+					indice++;
+				}
 			}
+			medias[i] = media/indice;
 			similaridade[i][j] = nominadorsimilaridade/(sqrt(raiz1) * sqrt(raiz2));
 			if (similaridade[i][j] == 1.00){
 				similaridade[i][j] = 0;
 			}
-			nominadorsimilaridade = 0; raiz1 = 0; raiz2 = 0;
+			nominadorsimilaridade = 0; raiz1 = 0; raiz2 = 0; media = 0; indice = 0;
 		}
 	}
 	//fim do bloco de calculo de similaridade
