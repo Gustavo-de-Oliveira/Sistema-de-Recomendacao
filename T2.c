@@ -5,7 +5,6 @@ int main(int argc, char const *argv[]){
 	int n, it;
 	float t;
 
-	//inicio bloco de leitura das variaveis e da tabela/matriz
 	n = 0; it = 0; t = 0.0;
 	scanf("%d %d %f", &n, &it, &t);
 
@@ -19,16 +18,14 @@ int main(int argc, char const *argv[]){
 			scanf("%d", &tabela[i][j]);
 		}
 	}
-	//fim bloco de leitura das variaveis e da tabela/matriz
 
-	//inicio do bloco para calculo das similaridades
 	int nominadorsimilaridade;
 	float raiz1, raiz2;
 	float media;
 	int indice;
 
 	nominadorsimilaridade = 0; raiz1 = 0; raiz2 = 0; media = 0; indice = 0;
-	for (int i = 0; i < n; i = ++i){
+	for (int i = 0; i < n; ++i){
 		for (int j = 0; j < n; ++j){
 			for (int k = 0; k < it; ++k){
 				nominadorsimilaridade += tabela[i][k] * tabela[j][k];
@@ -47,9 +44,7 @@ int main(int argc, char const *argv[]){
 			nominadorsimilaridade = 0; raiz1 = 0; raiz2 = 0; media = 0; indice = 0;
 		}
 	}
-	//fim do bloco de calculo de similaridade
 
-	//inicio do bloco para calculo de estimativa de nota
 	float nominadornota = 0.0;
 	float denominadornota = 0.0;
 
@@ -59,22 +54,31 @@ int main(int argc, char const *argv[]){
 				for (int k = 0; k < n; ++k){
 					if (similaridade[i][k] >= t){
 						if (tabela[k][j] > 0){
-							nominadornota += similaridade[i][k] * tabela[k][j];
+							nominadornota += similaridade[i][k] * (tabela[k][j] - medias[k]);
 							denominadornota += similaridade[i][k];
 						}
 					}
 				}
-				printf("%.2f\n", nominadornota/denominadornota);
+					printf("%.2f ", medias[i] + nominadornota/denominadornota);
 			}
-			denominadornota = 0.0;
-			nominadornota = 0.0;
+			denominadornota = 0.0; nominadornota = 0.0;
 		}
+		printf("\n");
 	}
 	return 0;
 }
+
 /*5 7 0.65	                                        
 5 3 2 3 4 4 4
 4 5 2 1 5 4 2
 1 4 4 2 3 5 1
 5 2 3 4 2 1 5
-1 0 2 3 2 3 0*/
+1 0 2 3 2 3 0
+
+5 4 0.7                                                     
+5 3 2 0
+1 3 4 3
+0 3 0 2
+0 0 0 3
+1 3 2 4
+*/
