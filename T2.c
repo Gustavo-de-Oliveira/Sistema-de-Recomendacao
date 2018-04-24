@@ -38,9 +38,9 @@ int main(int argc, char const *argv[]){
 
 	//calculo de similaridade
 	nominadorsimilaridade = 0; raiz1 = 0; raiz2 = 0; media = 0; indice = 0;
-	for (int i = 0; i < usuarios; ++i){
-		for (int j = 0; j < usuarios; ++j){
-			for (int k = 0; k < itens; ++k){
+	for (int i = 0; i < usuarios; ++i){//Esse primeiro 'for' serve para definir a linha da matriz de similaridades, ou seja, a similaridade de qual linha
+		for (int j = 0; j < usuarios; ++j){//Esse segundo 'for' calculará o com qual linha sera calculada na matriz similaridade
+			for (int k = 0; k < itens; ++k){//Esse 'for' vai definir qual coluna sera calculada
 				nominadorsimilaridade += tabela[i][k] * tabela[j][k];
 				raiz1 += pow(tabela[i][k], 2);
 				raiz2 += pow(tabela[j][k], 2);
@@ -64,9 +64,9 @@ int main(int argc, char const *argv[]){
 	int pseudoBool = 0;
 
 	//cálculo para estimar a nota do usuário
-	for (int i = 0; i < usuarios; ++i){
-		for (int j = 0; j < itens; ++j){
-			if(tabela[i][j] == 0){
+	for (int i = 0; i < usuarios; ++i){//Esse 'for' vai definir qual linha será veroficada
+		for (int j = 0; j < itens; ++j){//Esse 'for' vai definir com qual linha será verificada
+			if(tabela[i][j] == 0){//'for' para definir qual coluna será verificada
 				for (int k = 0; k < usuarios; ++k){
 					if (similaridade[i][k] >= limiar){
 						if (tabela[k][j] > 0){
