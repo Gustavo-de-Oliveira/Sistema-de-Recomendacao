@@ -1,35 +1,46 @@
+/*
+	Programa que calcula a similaridade de preferencias entre usuarios.
+	Trabalho 2 - ICC
+	Gustavo de Oliveira Silva - ICMC/USP	
+	30/04/2018
+*/
+
 	#include <stdio.h>
 	#include <math.h>
 
-	int main(int argc, char const *argv[]){
-	int n, it;
-	float t;
+int main(int argc, char const *argv[]){
+	//decaração das variaveis de programa
+	int usuarios, itens;
+	float limiar;
 
-	//n = 5; it = 4; t = 0.7;
-	n = 0; it = 0; t = 0.0;
-	scanf("%d %d %f", &n, &it, &t);
+	//leitura dos parâmetros da matriz
+	usuarios = 0; itens = 0; limiar = 0.0;
+	scanf("%d %d %f", &usuarios, &itens, &limiar);
 
-	//int tabela[5][4] = {5, 3, 2, 0, 1, 3, 4, 3, 0, 3, 0, 2, 0, 0, 0, 3, 1, 3, 2, 4};
-	int tabela[n][it];
-	float similaridade[n][n];
-	float medias[n];
+	//declaração das matrizes
+	int tabela[usuarios][itens];
+	float similaridade[usuarios][usuarios];
+	float medias[usuarios];
 
-	for (int i = 0; i < n; ++i){
-		for (int j = 0; j < it; ++j){
+	//leitura da tabela de notas
+	for (int i = 0; i < usuarios; ++i){
+		for (int j = 0; j < itens; ++j){
 			tabela[i][j] = 0;
 			scanf("%d", &tabela[i][j]);
 		}
 	}
 
+	//variáveis para o cálculo de similaridade
 	int nominadorsimilaridade;
 	float raiz1, raiz2;
 	float media;
 	int indice;
 
+	//calculo de similaridade
 	nominadorsimilaridade = 0; raiz1 = 0; raiz2 = 0; media = 0; indice = 0;
-	for (int i = 0; i < n; ++i){
-		for (int j = 0; j < n; ++j){
-			for (int k = 0; k < it; ++k){
+	for (int i = 0; i < usuarios; ++i){
+		for (int j = 0; j < usuarios; ++j){
+			for (int k = 0; k < itens; ++k){
 				nominadorsimilaridade += tabela[i][k] * tabela[j][k];
 				raiz1 += pow(tabela[i][k], 2);
 				raiz2 += pow(tabela[j][k], 2);
@@ -47,19 +58,21 @@
 		}
 	}
 
+	//variaveis para estimar a nota
 	float nominadornota = 0.0;
 	float denominadornota = 0.0;
-	int teste = 0;
+	int pseudoBool = 0;
 
-	for (int i = 0; i < n; ++i){
-		for (int j = 0; j < it; ++j){
+	//cálculo para estimar a nota do usuário
+	for (int i = 0; i < usuarios; ++i){
+		for (int j = 0; j < itens; ++j){
 			if(tabela[i][j] == 0){
-				for (int k = 0; k < n; ++k){
-					if (similaridade[i][k] >= t){
+				for (int k = 0; k < usuarios; ++k){
+					if (similaridade[i][k] >= limiar){
 						if (tabela[k][j] > 0){
 							nominadornota += similaridade[i][k] * (tabela[k][j] - medias[k]);
 							denominadornota += similaridade[i][k];
-							teste = 1;
+							pseudoBool = 1;
 						}
 					}
 				}				
@@ -69,33 +82,18 @@
 				}
 				else{
 					printf("DI ");
-					teste = 1;
+					pseudoBool = 1;
 				}
 			}
 			else{
 			}
 			denominadornota = 0.0; nominadornota = 0.0;
 		}
-		if (teste == 1)
+		if (pseudoBool == 1)
 		{
 			printf("\n");
-			teste = 0;
+			pseudoBool = 0;
 		}
 	}
 	return 0;
-	}
-
-	/*5 7 0.65	                                        
-	5 3 2 3 4 4 4
-	4 5 2 1 5 4 2
-	1 4 4 2 3 5 1
-	5 2 3 4 2 1 5
-	1 0 2 3 2 3 0
-
-	5 4 0.7                                                     
-	5 3 2 0
-	1 3 4 3
-	0 3 0 2
-	0 0 0 3
-	1 3 2 4
-	*/
+}
