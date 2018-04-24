@@ -5,8 +5,8 @@
 	30/04/2018
 */
 
-	#include <stdio.h>
-	#include <math.h>
+#include <stdio.h>
+#include <math.h>
 
 int main(int argc, char const *argv[]){
 	//decaração das variaveis de programa
